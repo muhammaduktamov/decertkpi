@@ -11,6 +11,7 @@ keyboard = [
 
 reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     name = update.effective_user.first_name
@@ -23,6 +24,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         }
 
     await update.message.reply_text(f"{name}, ты подключен ✅", reply_markup=reply_markup)
+
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
@@ -73,12 +75,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(text)
 
+
 TOKEN = os.getenv("BOT_TOKEN")
 
 app = ApplicationBuilder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
 
 if __name__ == "__main__":
     print("Bot started...")
